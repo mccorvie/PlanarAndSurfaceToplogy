@@ -138,7 +138,7 @@ L1 polygonal engine
 
 ## Layer 0: Conventions, transport, and plane pathologies
 
-This preliminary layer fixes the ambient models and transport lemmas used throughout the roadmap. It also contains two classical constructions showing that the hypotheses in later separation theorems are necessary.
+This preliminary layer fixes the ambient models and transport lemmas used throughout the roadmap. It also contains two classical constructions showing that the hypotheses in later separation theorems are necessary.  It also describes Alexander's trick.
 
 **From Mathlib and Tau Ceti.** `Complex.orthonormalBasisOneI`, `OrthonormalBasis.repr`, `Circle`, `AddCircle`, `AddCircle.homeomorphCircle`, `Circle.exp`, `sphereCircleHomeomorph`, `Isotopy`, `Isotopic`, `AmbientIsotopic`, `Continuum`, `LocallyConnected`.
 
@@ -163,6 +163,27 @@ instance (priority := low) {M : Type*} [TopologicalSpace M] [CompactSpace M] [T2
 /-- Isotopy relative to a subset; intended for the shared isotopy API. -/
 def IsotopicRel (A : Set X) (f g : C(X, Y)) : Prop
 
+
+/-- Alexander's trick, extension form. A homeomorphism of the boundary sphere cones radially to a homeomorphism of the closed ball. Stated dimension-generally; only
+    `n = 1` is used here. -/
+noncomputable def coneExtend {n : ℕ} (h : Metric.sphere (0 : EuclideanSpace ℝ (Fin n)) 1 ≃ₜ
+    Metric.sphere (0 : EuclideanSpace ℝ (Fin n)) 1) :
+    Metric.closedBall (0 : EuclideanSpace ℝ (Fin n)) 1 ≃ₜ
+    Metric.closedBall (0 : EuclideanSpace ℝ (Fin n)) 1
+
+theorem norm_coneExtend (h) (z) : ‖(coneExtend h z : _)‖ = ‖(z : _)‖
+theorem coneExtend_eqOn_sphere (h) : ∀ z ∈ Metric.sphere 0 1, coneExtend h z = h z
+
+/-- Alexander's trick, isotopy form. Two self-homeomorphisms of the ball that agree on the boundary are isotopic rel boundary. -/
+theorem isotopicRel_of_eqOn_sphere {n : ℕ} (f g : Metric.closedBall (0 : EuclideanSpace ℝ (Fin n)) 1 ≃ₜ
+    Metric.closedBall (0 : EuclideanSpace ℝ (Fin n)) 1)
+    (h : Set.EqOn f g (Metric.sphere 0 1)) :
+    IsotopicRel (Metric.sphere 0 1) f g
+
+/-- The PL flavor, which is what layer 4 spends: coning a PL homeomorphism of a polygon boundary over the polygon. -/
+theorem isPLMap_coneExtend (h) (hPL : IsPLMap h) : IsPLMap (coneExtend h)
+
+
 /-- Plane pathologies: these certify that later hypotheses cannot be weakened. -/
 theorem exists_spaceFillingCurve :
     ∃ f : C(unitInterval, Metric.closedBall (0 : ℂ) 1), Surjective f
@@ -171,16 +192,19 @@ theorem exists_jordanCurve_not_rectifiable :
     ∃ J : Set ℂ, IsJordanCurve J ∧ ¬ IsRectifiable J
 
 theorem exists_jordanCurve_volume_pos : ∃ J : Set ℂ, IsJordanCurve J ∧ 0 < volume J
-```
 
+
+```
 **Mathematical route and formalization notes.**
+
+- Alexander's trick is short but needed in three places. L4 uses the PL version to correct the 2-skeleton and fills each triangle. L7 uses the topological version when it glues the two Schoenflies discs along the curve. L8 uses the isotopy form in exists_isotopic_plHomeomorph.
 
 - The space-filling curve is why the Jordan curve theorem needs injectivity, and the non rectifiable curve (Koch snowflake) shows why one may not assume a curve is rectifiable.  The positive measure Osgood curve is why one may not assume the curve is measure 0. 
 - ⚠ The Osgood construction may be deferred to layer 7 without blocking anything, if its difficult to formalize
 
 **Examples and mathematical checks.** The round trips for `planeEquiv`, `Circle`, and `AddCircle` are proved explicitly, and at least one metric theorem is transported through the plane equivalence. The space-filling curve is given by a concrete construction rather than by an unstructured existence assertion.
 
-**Natural intermediate results.** (i) plane transport and the `perp`/`det` API; (ii) circle transport; (iii) second countability and surface conventions; (iv) relative and supported isotopy, in the shared isotopy library; (v) the space-filling curve; (vi) the Osgood curve.
+**Natural intermediate results.** (i) plane transport and the `perp`/`det` API; (ii) circle transport; (iii) second countability and surface conventions; (iv) Alexander's trick: coneExtend, the norm identity, the isotopy form, and the PL flavour. (v) relative and supported isotopy, in the shared isotopy library; (vi) the space-filling curve; (vii) the Osgood curve.
 
 ---
 
@@ -448,7 +472,7 @@ theorem hauptvermutung₂_isPL {K L} (hK : IsCombinatorialSurface K)
 
 **Mathematical route and formalization notes.**
 
-- Radó's construction grows an already triangulated region across a countable chart cover. On each overlap, the **local** form of the approximation theorem replaces a topological coordinate change by a controlled PL homeomorphism; this is the point at which the approximation theorem enters the triangulation proof.
+- Radó's construction grows an already triangulated region across a countable chart cover. On each overlap, the **local** form of the approximation theorem replaces a topological coordinate change by a controlled PL homeomorphism; this is the point at which the approximation theorem enters the triangulation proof.  
 - The collar theorem is the lever for the boundary case: push `∂M` inward along a collar, triangulate the interior, and extend combinatorially. If `TauCeti/Geometry/Manifold/Boundary/Collar/` is usable at the topological level; if not, the topological two-dimensional collar is a target here and a contribution back to `GeometricTopology` layer 1.
 - Locally finite triangulations of second-countable noncompact surfaces are built only insofar as the compact proof needs them, and the general noncompact Radó is out of scope.
 
