@@ -1,4 +1,4 @@
-# Roadmap: Combinatorial maps, embedded graphs, and the classification of surfaces
+# Roadmap: Surface topology, finite presentations, and classification
 
 A compact surface admits a finite description. A triangulation presents it as finitely many
 triangles with edge identifications; a generalized map records the same incidence data by
