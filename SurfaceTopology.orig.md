@@ -118,10 +118,7 @@ mature, the roadmap should derive its own graph type from maps and note the reve
 
 ### A mathematical hub and several presentations
 
-**The 2-dimensional generalized map is foundational.** A dart is a complete flag, so it
-natively carries the side-incidence data that a face poset loses; boundary is recorded by
-fixed points of the last involution; non-orientability needs no signed variant; and the
-definition is dimension-polymorphic even though the topology here is not.
+**The 2-dimensional generalized map is foundational.** A dart is a complete flag, so it natively carries the side-incidence data that a face poset loses; boundary is recorded by fixed points of the last involution; non-orientability needs no signed variant; and the definition is dimension-polymorphic even though the topology here is not.
 
 Oriented maps, hypermaps, cellulations, and polygonal schemas are **presentations**: each has
 a constructor into generalized maps, accessors out, and its own natural operations, but not a
@@ -233,15 +230,12 @@ L5 embedded graphs and HER        L6 schemas and normal forms
 
 ## Layer 0: Finite conventions
 
-This layer isolates the finite equivalence relations needed by cyclic words and by moves
-that change an object's indexing type.
+This layer isolates the finite equivalence relations needed by cyclic words and by moves that change an object's indexing type.
 
 **Representative formal statements.**
 
 ```lean
-/-- Cyclic words. Kept deliberately separate from `CircularOrder` and from the
-    topological circle: a cyclic word is a finite sequence with repeated labels,
-    taken modulo rotation. -/
+/-- Cyclic words. Kept deliberately separate from `CircularOrder` and from the topological circle: a cyclic word is a finite sequence with repeated labels, taken modulo rotation. -/
 def CyclicWord (α : Type*) : Type* := Quotient (rotationSetoid α)
 
 structure BundledFinite where

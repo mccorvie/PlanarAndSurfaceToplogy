@@ -1,43 +1,24 @@
 # Roadmap: Surface topology, finite presentations, and classification
 
-A compact surface admits a finite description. A triangulation presents it as finitely many
-triangles with edge identifications; a generalized map records the same incidence data by
-three involutions on a finite set of darts. This roadmap proves that the finite and
-topological descriptions determine one another, develops the finite invariants and moves,
-and derives the classification of compact surfaces.
+A compact surface admits a finite description. A triangulation presents it as finitely many triangles with edge identifications.  A generalized map records the same incidence data by three involutions on a finite set of darts. This roadmap proves that the finite and topological descriptions determine one another, develops the finite invariants and moves, and derives the classification of compact surfaces.
 
-The core summits are:
+The summits reached by this roadmap are:
 
-1. **The realization theorem**: an admissible finite generalized map realizes as a compact
-   surface, and every compact surface has such a presentation.
-2. **The Heffter–Edmonds–Ringel theorem**: cellular embeddings of a graph correspond to
-   rotation systems in the orientable case, and to signed embedding schemes in general.
-3. **The normal-form theorem**: every closed polygonal schema is related by elementary
-   moves to a standard orientable or nonorientable word. Surfaces with boundary are reduced
-   to the closed case by capping.
-4. **The classification of compact surfaces**: every compact connected surface, with or
-   without boundary, is homeomorphic to exactly one standard model, determined by Euler
-   characteristic, orientability, and number of boundary components.
+1. **The realization theorem**: an admissible finite generalized map can be realized as a compact surface, and every compact surface has a presentation as a generalized map.
+2. **The Heffter–Edmonds–Ringel theorem**: cellular embeddings of a graph correspond to rotation systems in the orientable case, and to signed embedding schemes in general.
+3. **The normal-form theorem**: every closed polygonal schema is related by elementary moves to a standard orientable or nonorientable word. Surfaces with boundary are reduced to the closed case by capping.
+4. **The classification of compact surfaces**: every compact connected surface, with or without boundary, is homeomorphic to exactly one standard model, determined by Euler characteristic, orientability, and number of boundary components.
 
-Two later layers extend and test the core theory without lying on the classification's
-critical path:
+Two later layers are further applications of the core thoery:
 
-5. **Curves, cutting, and mapping class groups**: Dehn twists, the
-   change-of-coordinates principle, and the Dehn–Lickorish generation theorem.
-6. **Planarity**: Kuratowski, Whitney, Mac Lane, Fáry, and the five-colour theorem, as a
-   substantial theorem suite built on the map and embedding theory.
+5. **Curves, cutting, and mapping class groups**: Dehn twists, the change-of-coordinates principle, and the Dehn–Lickorish generation theorem.
+6. **Planarity**: Kuratowski, Whitney, Mac Lane, Fáry, and the five-colour theorem, as a theorem suite built on the map and embedding theory.
 
-Layer 10 is therefore best read as a mathematical validation and extension of the finite-map
-library, not as part of the proof of surface classification. Its intended scope is stated by
-reference to a standard chapter; see layer 10.
+Layer 10 is best read as a mathematical validation and extension of the finite-map library.  It's not part of the proof of surface classificatio, and its not a complete roadmap for graphs on surfaces.
 
-Each layer below is organized around its principal theorem, mathematical dependencies, and
-proof route. The Lean declarations are representative interfaces: they expose the intended
-connections to Tau Ceti without replacing the mathematical statements.
+Each layer below is organized around its principal theorem, mathematical dependencies, and proof route. The Lean declarations are representative interfaces: they expose the intended connections to Tau Ceti without replacing the mathematicalstatements.
 
-> **Naming.** The directory name `CombinatorialMaps` describes the method; `SurfaceTopology`
-> would describe the subject. Either is defensible and the choice should be made by the
-> maintainers.
+> **Naming.** The directory name `CombinatorialMaps` describes the method; `SurfaceTopology` describes the subject.  
 
 ---
 
@@ -45,11 +26,11 @@ connections to Tau Ceti without replacing the mathematical statements.
 
 ### This roadmap supplies
 
-| Consumer | What it needs | Status there today |
-|---|---|---|
-| `GeometricTopology` layer 9 | the classification of closed orientable surfaces, for the splitting surface | listed as an input with no owner anywhere in Tau Ceti |
-| `GeometricTopology` layer 9 | surface mapping classes | the layer says "consume layer 3's surface mapping classes", but layer 3 is diffeomorphism groups and does not build them |
-| a future Four Colour roadmap | plane maps, duality, Euler's formula, the five-colour theorem | not built |
+| Consumer | What it needs | 
+|---|---|
+| `GeometricTopology` layer 9 | the classification of closed orientable surfaces, for the splitting surface | 
+| `GeometricTopology` layer 9 | surface mapping classes |
+| a future Four Colour roadmap | plane maps, duality, Euler's formula, the five-colour theorem | 
 
 ### This roadmap consumes
 
@@ -77,16 +58,8 @@ From Tau Ceti and Mathlib:
 | the multigraph `Graph α β` | Mathlib, **verify the current API before layer 5** |
 | `Combinatorics/SimpleGraph/{Acyclic, BranchComponents, PathGraph}` | Tau Ceti |
 
-⚠ `TauCeti/LinearAlgebra/Matrix/SmithNormalForm.lean` covers only **square** integer matrices
-of positive determinant. Boundary matrices are rectangular. Use the PID structure theorem.
+⚠ `TauCeti/LinearAlgebra/Matrix/SmithNormalForm.lean` covers only **square** integer matrices of positive determinant. Boundary matrices are rectangular. Use the PID structure theorem.
 
-### Cross-roadmap statements to record
-
-- `GeometricTopology` layer 9: record that the surface classification and the surface
-  mapping class group listed as inputs are owned here.
-- The same cross-links to `GeometricTopology` layers 1, 2, and 11 and to `ConformalMapping`
-  that [PlanarTopology](../PlanarTopology/README.md) proposes; land them in whichever pull
-  request merges first and reference both new roadmaps.
 
 ---
 
@@ -95,22 +68,12 @@ of positive determinant. Boundary matrices are rectangular. Use the PID structur
 Verified against Lean `v4.34.0-rc1` and Mathlib `master` at
 `05ae0103f49b1ad1248f6039bbbad43d8aeb52a9`.
 
-**Absent from Tau Ceti, confirmed by grep.** No `GMap`, no `Hypermap`, no `Cellulation`, no
-`rotationSystem`, no `eulerChar`, no `IsCombinatorialManifold`. `TauCeti/Combinatorics/`
-contains Brauer diagrams, enumerative combinatorics, quivers, Young tableaux, and three thin
-`SimpleGraph` files. **The entire finite-map side of this roadmap is greenfield.**
+**Absent from Tau Ceti** No `GMap`, no `Hypermap`, no `Cellulation`, no `rotationSystem`, no `eulerChar`, no `IsCombinatorialManifold`. `TauCeti/Combinatorics/`
+contains Brauer diagrams, enumerative combinatorics, quivers, Young tableaux, and three thin `SimpleGraph` files. **The entire finite-map side of this roadmap is greenfield.**
 
-**Present and relevant.** `TauCeti/AlgebraicTopology/UniversalCover/` is substantial and
-includes fundamental groups of the circle, the torus, and the real projective plane, which
-are useful cross-checks for layer 7. `TauCeti/AlgebraicTopology/SimplicialComplex/` is the
-target of layer 3's comparison theorem.
+**Present and relevant.** `TauCeti/AlgebraicTopology/UniversalCover/` is substantial and includes fundamental groups of the circle, the torus, and the real projective plane, which are useful cross-checks for layer 7. `TauCeti/AlgebraicTopology/SimplicialComplex/` is the target of layer 3's comparison theorem.
 
-## Coordination note
 
-Search the Lean Zulip for combinatorial maps, hypermaps, rotation systems, planarity, and
-Kuratowski before starting layers 1 and 10. Check the status of Mathlib's multigraph
-`Graph α β` before layer 5: layer 5 and layer 10 both depend on it, and if it is not yet
-mature, the roadmap should derive its own graph type from maps and note the reversal.
 
 ---
 
@@ -118,10 +81,7 @@ mature, the roadmap should derive its own graph type from maps and note the reve
 
 ### A mathematical hub and several presentations
 
-**The 2-dimensional generalized map is foundational.** A dart is a complete flag, so it
-natively carries the side-incidence data that a face poset loses; boundary is recorded by
-fixed points of the last involution; non-orientability needs no signed variant; and the
-definition is dimension-polymorphic even though the topology here is not.
+**The 2-dimensional generalized map is taken as the foundation.** A dart is a complete flag, so it natively carries the side-incidence data that a face poset loses; boundary is recorded by fixed points of the last involution; non-orientability needs no signed variant; and the definition is dimension-polymorphic even though the topology here is not.
 
 Oriented maps, hypermaps, cellulations, and polygonal schemas are **presentations**: each has
 a constructor into generalized maps, accessors out, and its own natural operations, but not a
