@@ -1,6 +1,6 @@
 # Roadmap: Surface topology, finite presentations, and classification
 
-A compact surface admits a finite description. A triangulation presents it as finitely many triangles with edge identifications.  A generalized map records the same incidence data by three involutions on a finite set of darts. This roadmap proves that the finite and topological descriptions determine one another, develops the finite invariants and moves, and derives the classification of compact surfaces.
+A compact surface admits several finite combinatorial descriptions. A triangulation presents it as finitely many triangles with edge identifications.  A generalized map records the same incidence data by three involutions on a finite set of darts. This roadmap proves that the finite and topological descriptions determine one another, develops the finite invariants and moves, and derives the classification of compact surfaces.
 
 The summits reached by this roadmap are:
 
@@ -81,38 +81,23 @@ contains Brauer diagrams, enumerative combinatorics, quivers, Young tableaux, an
 
 ### A mathematical hub and several presentations
 
-**The 2-dimensional generalized map is taken as the foundation.** A dart is a complete flag, so it natively carries the side-incidence data that a face poset loses; boundary is recorded by fixed points of the last involution; non-orientability needs no signed variant; and the definition is dimension-polymorphic even though the topology here is not.
+**The 2-dimensional generalized map is taken as the foundation.** A dart contains a complete flag, but also natively carries the side-incidence data that a face poset loses.  Boundary-ness is recorded by fixed points of the highest order innovation.  Non-orientability needs no signed variant.
 
-Oriented maps, hypermaps, cellulations, and polygonal schemas are **presentations**: each has
-a constructor into generalized maps, accessors out, and its own natural operations, but not a
-parallel realization theory. Realization, Euler characteristic, orientability, and the
-operations are defined once, on generalized maps.
+Oriented maps, hypermaps, cellulations, and polygonal schemas are **presentations**: each can be bidirectionally translated into the language of generalized maps, and each possesses its own natural operations.  This roadmap does not propose a parallel realization theory. Realization, Euler characteristic, orientability, and the operations are defined once, on generalized maps.  This is deliberate, and it follows the discipline `GeometricTopology` layer 4 states for knot presentations: pick a hub, do not aim for the complete graph on presentations.
 
-This is deliberate, and it follows the discipline `GeometricTopology` layer 4 states for knot
-presentations: pick a hub, do not aim for the complete graph on presentations. Four co-equal
-first-class types would mean four realization theories, four isomorphism notions, four
-orientability definitions, and naturality of every conversion with respect to all of them.
-
-The six comparison theorems in layer 2 are not a claim that all presentations are
-co-equal. They state precisely which information each conversion preserves and certify that
-the chosen hub represents the same finite surface data.
+The six comparison theorems in layer 2 are not a claim that all presentations are co-equal. They state precisely which information each conversion preserves and certify that the chosen hub represents the same finite surface data.
 
 ### Bundled index types and isomorphism closure
 
-Every finite object bundles its own index type: darts for maps, vertices for complexes,
-labels for schemas. Every move relation is **closed under isomorphism of that type** before
-`Relation.ReflTransGen` is applied.
+Every finite object bundles its own index type: darts for maps, vertices for complexes, labels for schemas. Every move relation is **closed under isomorphism of that type** before `Relation.ReflTransGen` is applied.
 
-⚠ This is not cosmetic. The Pachner 1↔3 move adds a vertex and the schema cancellation move
-removes a letter, so both change the index type. A relation on a fixed index type cannot
-express them, and without the isomorphism closure `ReflTransGen` demands that intermediate
-index types line up on the nose.
+⚠ This is not cosmetic. The Pachner 1↔3 move adds a vertex and the schema cancellation move removes a letter, so both changes affect the index type. A relation on a fixed index type cannot express them, and `ReflTransGen` demands that intermediate index types line up on the nose.
 
 ### Realization
 
 `GMap2.realization G` is defined **directly**, as the quotient of `D × Δ²` by the
 side-gluings induced by the three involutions. It is always defined, with no hypotheses, and
-it is the object that carries the topology.
+this object carries the topology.
 
 ⚠ **The flag complex of a generalized map is not in general an abstract simplicial complex.**
 Take the projective plane as the word `aa`, with one vertex, one edge, and one face. As a
@@ -124,12 +109,10 @@ generalized map on darts `{1,2,3,4}` with
 
 the involutions `α₀` and `α₂` commute, so this is a valid 2-generalized map; all three orbit
 groups act transitively, so there is one cell of each dimension and `χ = 1 - 1 + 1 = 1`. The
-flag vertex set has three elements and admits exactly one triangle. **Four darts collapse to
-one simplex.** The one-vertex torus fails the same way at larger scale: eight darts, four
-flag vertices, two distinct triples.
+flag vertex set has three elements and admits exactly one triangle. However the four darts collapse to one simplex. The one-vertex torus fails in a similar way: eight darts, four flag vertices, two distinct triples.
 
 The bridge to `AbstractSimplicialComplex` is therefore a **theorem about a subdivision**, not
-a definition: after the canonical barycentric subdivision of the map, the flag map is
+a definition.  After the canonical barycentric subdivision of the map, the flag map is
 injective and the flag complex is honest. The `aa` map above is the certified counter-witness
 recorded in layer 3's examples and mathematical checks.
 
@@ -142,26 +125,15 @@ def GMap2.eulerChar (G : GMap 2 D) : ℤ :=
 
 with `Cell 0 = Orb⟨α₁,α₂⟩`, `Cell 1 = Orb⟨α₀,α₂⟩`, `Cell 2 = Orb⟨α₀,α₁⟩`.
 
-**Boundary is recorded entirely by fixed points of `α₂`; these fixed points introduce
-no extra cells and there is no outer face.** Boundary vertices and edges are already counted
-by the ordinary orbit cells. A boundary edge has a two-element `⟨α₀,α₂⟩`-orbit and an
-interior edge a four-element one; that is the decidable boundary test.
+**The boundary is recorded entirely by fixed points of `α₂`**.  Boundary vertices and edges are already counted by the ordinary orbit cells. A boundary edge has a two-element `⟨α₀,α₂⟩`-orbit and an interior edge a four-element one.  This is the decidable boundary test.
 
 ### Invariance
 
-**Invariance comes from the Hauptvermutung, not from comparison with singular theory.** Every
-invariant here is defined on a finite presentation and proved invariant under isomorphism,
-subdivision, and the elementary moves. `PlanarTopology`'s Radó and Hauptvermutung then make
-it a homeomorphism invariant.
+**Invariance comes from the Hauptvermutung, not from comparison with singular theory.** Every invariant here is defined on a finite presentation and proved invariant under isomorphism, subdivision, and the elementary moves. `PlanarTopology`'s Radó and Hauptvermutung then make it a homeomorphism invariant.
 
-⚠ No comparison theorem with Mathlib's `SingularHomology` or `FundamentalGroup` is a target.
-None is needed, and none is currently provable: Mathlib's singular homology has no excision
-and no Mayer–Vietoris at the pinned commit.
+⚠ This roadmap does not contemplate a comparison theorem with Mathlib's `SingularHomology` or `FundamentalGroup`. None is needed.  Moreover Mathlib's singular homology has no excision and no Mayer–Vietoris at the pinned commit, so none is currently provable.
 
-Consequently, ⚠ **the homology and fundamental group here are named for what they are.** Use
-`Cellulation2.homology` and `Cellulation2.edgePathGroup`, never bare `H₁` or `π₁`. A theorem
-reading `H₁_torus : H₁ T² ≅ ℤ × ℤ` would overclaim. When the comparison becomes available it
-will be a bridge theorem with two well-named sides.
+Consequently, ⚠ **the homology and fundamental group here are named for what they are.** Use `Cellulation2.homology` and `Cellulation2.edgePathGroup`, never bare `H₁` or `π₁`. A theorem reading `H₁_torus : H₁ T² ≅ ℤ × ℤ` would claim too much. When the comparison becomes available it will be a bridge theorem with two well-named sides.
 
 ---
 
@@ -174,10 +146,10 @@ L1 generalized maps ------------------------------.
  |                                                 |
 L2 presentations and comparison theorems           |
  |                                                 |
-L3 realization  <---- PlanarTopology L3, L5, L6        |
+L3 realization  <---- PlanarTopology L3, L5, L6    |
  |                                                 |
-L4 operations on finite surfaces -----.              |
- |                                      \             |
+L4 operations on finite surfaces -----.            |
+ |                                      \          |
 L5 embedded graphs and HER        L6 schemas and normal forms
  |                                 |
  |                                L7 combinatorial homology and edge-path group
@@ -193,8 +165,7 @@ L5 embedded graphs and HER        L6 schemas and normal forms
 
 ## Layer 0: Finite conventions
 
-This layer isolates the finite equivalence relations needed by cyclic words and by moves
-that change an object's indexing type.
+This layer isolates the finite equivalence relations needed by cyclic words and by moves that change an object's indexing type.
 
 **Representative formal statements.**
 
@@ -204,32 +175,33 @@ that change an object's indexing type.
     taken modulo rotation. -/
 def CyclicWord (α : Type*) : Type* := Quotient (rotationSetoid α)
 
+class HasIsoRel (X : Type*) where
+  IsoRel : X → X → Prop
+  isEquiv : Equivalence IsoRel
+
 structure BundledFinite where
   ι : Type
   fintype : Fintype ι
   decEq : DecidableEq ι
 
 /-- The isomorphism closure of a relation on bundled objects. -/
-def isoClosure {X : Type*} [HasIso X] (r : X → X → Prop) : X → X → Prop :=
-  fun a b => ∃ a' b', Nonempty (a ≅ a') ∧ Nonempty (b ≅ b') ∧ r a' b'
+def isoClosure {X : Type*} [HasIsoRel X] (r : X → X → Prop) : X → X → Prop :=
+  fun a b => ∃ a' b', IsoRel a a' ∧ IsoRel b b' ∧ r a' b'
 
 theorem isoClosure_reflTransGen_congr : ...
 ```
 
-**Mathematical route and formalization notes.** `Function.Involutive` and `Commute` in `Equiv.Perm D` are the Mathlib
-idioms; do not hand-roll `∀ d, f (f d) = d` or `f ∘ g = g ∘ f`.
+**Proof strategy and formalization notes.** `Function.Involutive` and `Commute` in `Equiv.Perm D` are the Mathlib idioms; do not hand-roll `∀ d, f (f d) = d` or `f ∘ g = g ∘ f`.
 
-**Examples and mathematical checks.** `CyclicWord` equality is `Decidable` and distinguishes `abab` from
-`aabb` while identifying `abab` with `baba`.
+**Examples and mathematical checks.** `CyclicWord` equality is `Decidable` and distinguishes `abab` from `aabb` while identifying `abab` with `baba`.
 
-**Natural intermediate results.** (i) cyclic words; (ii) bundling and isomorphism closure;
-(iii) `ReflTransGen` lemmas for isomorphism-closed relations.
+**Natural intermediate results.** (i) cyclic words; (ii) bundling and isomorphism closure; (iii) `ReflTransGen` lemmas for isomorphism-closed relations.
 
 ---
 
 ## Layer 1: Generalized maps
 
-The foundational object.
+The foundational object for all of the combinatorial topology which follows.
 
 **Representative formal statements.**
 
@@ -239,10 +211,17 @@ structure GMap (n : ℕ) (D : Type*) [Fintype D] [DecidableEq D] where
   involutive : ∀ i, Function.Involutive (adj i)
   commute_of_far : ∀ i j, i.1 + 2 ≤ j.1 → Commute (adj i) (adj j)
 
+
 abbrev GMap2 (D : Type*) [Fintype D] [DecidableEq D] := GMap 2 D
 
 def GMap.Cell (G : GMap n D) (i : Fin (n + 1)) : Type* :=
   MulAction.orbitRel.Quotient (Subgroup.closure {G.adj j | j ≠ i}) D
+
+structure GMap2.Iso {D D' : Type*} [Fintype D] [Fintype D']
+    (G : GMap2 D) (G' : GMap2 D') where
+  toEquiv : D ≃ D'
+  map_adj : ∀ i d, toEquiv (G.adj i d) = G'.adj i (toEquiv d)
+
 
 def GMap2.eulerChar (G : GMap2 D) : ℤ := ...
 
@@ -273,31 +252,14 @@ def GMap2.nonorientableGenus (G : GMap2 D)
     (h : G.IsConnected ∧ IsSurfaceGMap G ∧ ¬ G.IsOrientable) : ℕ
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- ⚠ **The exact surface condition is the highest-risk definition in either roadmap.** A
-  generalized map permits multi-incidence and folded configurations, so the bare involution
-  axioms describe a wider class than regular cell decompositions. At the same time, valid
-  surface presentations such as the one-face projective-plane word `aa` have repeated
-  incidence and must not be excluded merely for failing regularity. In dimension two the
-  incidence graph generated by two involutions has valence at most two, suggesting that the
-  circle-or-arc link condition follows from a small local non-degeneracy condition. That
-  implication should be proved, and the precise condition should be taken from
-  Damiand–Lienhardt rather than guessed from examples.
-- The decisive characterization is the later equivalence between the finite local condition
-  and the statement that every point of the realization has a disc or half-disc
-  neighbourhood. Positive and negative finite examples belong to that theorem's
-  specification.
-- Orientability is a bipartition of the darts in which every **non-fixed** adjacency changes
-  side. Fixed points of the final involution encode boundary and must not make orientability
-  impossible. The existence of such a bipartition is a property; a chosen bipartition is
-  additional data.
-- The `commute_of_far` condition is stated only for `i + 2 ≤ j`; its symmetric form is an
-  immediate lemma. The two genus numbers are first defined from the finite invariants; their
-  identification with the genera of the standard surfaces is proved in layer 8.
+- ⚠ **The exact surface condition is the highest-risk definition of the roadmap.** A generalized map permits multi-incidence and folded configurations, so the bare involution axioms describe a wider class than regular cell decompositions. At the same time, valid surface presentations such as the one-face projective-plane word `aa` have repeated incidence and must not be excluded merely for failing regularity. In dimension two the incidence graph generated by two involutions has valence at most two, suggesting that the circle-or-arc link condition follows from a small local non-degeneracy condition. That implication should be proved, and the precise condition should be taken from Damiand–Lienhardt.
+- The decisive characterization is the later equivalence between the finite local condition and the statement that every point of the realization has a disc or half-disc neighbourhood. Positive and negative finite examples belong to that theorem's specification.
+- Orientability is a bipartition of the darts in which every **non-fixed** adjacency changes side. Fixed points of the final involution encode boundary and must not make orientability impossible. The existence of such a bipartition is a property; a chosen bipartition is additional data.
+- The `commute_of_far` condition is stated only for `i + 2 ≤ j`; its symmetric form is an immediate lemma. The two genus numbers are first defined from the finite invariants; their identification with the genera of the standard surfaces is proved in layer 8.
 
-**Examples and mathematical checks.** The following table is checked by `decide`, with the maps written
-out explicitly.
+**Examples and mathematical checks.** The following table is checked by `decide`, with the maps written out explicitly.
 
 | Map | darts | V | E | F | χ | orientable |
 |---|---|---|---|---|---|---|
@@ -309,23 +271,15 @@ out explicitly.
 | annulus | 8 | 2 | 3 | 1 | 0 | yes |
 | Möbius band | 8 | 2 | 3 | 1 | 0 | no |
 
-Counter-witnesses: `IsSurfaceGMap` is **false** for the immediate folded-edge
-configuration singled out by `IsSurfaceNondegenerate`, and **false** for a map with a fixed
-point of `α₀` or of `α₁`.
-`IsOrientable` is **false** for the Klein bottle map and **true** for the torus map, decided
-by the same procedure.
+Counter-witnesses: `IsSurfaceGMap` is **false** for the immediate folded-edge configuration singled out by `IsSurfaceNondegenerate`, and **false** for a map with a fixed point of `α₀` or of `α₁`. `IsOrientable` is **false** for the Klein bottle map and **true** for the torus map, decided by the same procedure.
 
-**Natural intermediate results.** (i) the structure and basic permutation lemmas; (ii) cells, orbits, and
-decidability; (iii) Euler characteristic and the example table; (iv) boundary darts and the
-boundary test; (v) `IsSurfaceGMap` and its counter-witnesses; (vi) orientability;
-(vii) boundary count and the two genus formulas for connected surface maps.
+**Natural intermediate results.** (i) the structure and basic permutation lemmas; (ii) cells, orbits, and decidability; (iii) Euler characteristic and the example table; (iv) boundary darts and the boundary test; (v) `IsSurfaceGMap` and its counter-witnesses; (vi) orientability; (vii) boundary count and the two genus formulas for connected surface maps.
 
 ---
 
 ## Layer 2: Presentations and comparison theorems
 
-Each presentation gets a constructor into generalized maps, accessors out, and its own
-natural operations. None gets a realization theory.
+Each presentation gets a constructor into generalized maps, accessors out, and its own natural operations. None gets a realization theory.
 
 **Representative formal statements.**
 
@@ -358,32 +312,18 @@ structure PolygonalSchema where
 def PolygonalSchema.toGMap2 : GMap2 _
 ```
 
-**The six comparison theorems.** These identify the information preserved by the
-conversions; they do not make the presentations co-equal foundations.
+**The six comparison theorems.** These identify the information preserved by the conversions; they do not make the presentations co-equal foundations.
 
-1. `K.toGMap2.flagComplex ≅ K.barycentricSubdivision` for a combinatorial surface `K`.
-   ⚠ This is the master test. If it holds, the generalized map is not lying about the
-   surface. It is stated here and proved in layer 3, where realization exists.
+1. `K.toGMap2.flagComplex ≃ K.barycentricSubdivision` for a combinatorial surface `K`. ⚠ This is the master test. If it holds, the generalized map is not lying about the surface. It is stated here and proved in layer 3, where realization exists.
 2. `|flagComplex G| ≃ₜ G.realization`. The two realizations agree. Proved in layer 3.
-3. `G.toCellulation.toGMap2 ≅ G`, up to the canonical subdivision. Tests that the cellulation
-   constructor loses no flag data.
-4. `M.toGMap2.toCombinatorialMap ≅ M` after choosing the induced orientation. Tests the
-   orientation encoding.
-5. `G.dual.dual ≅ G`, with canonically homeomorphic realizations.
-6. Converting a schema to a generalized map recovers both its glued edge-pairs and its
-   singleton boundary edges, up to cyclic equivalence and relabelling.
+3. `G.toCellulation.toGMap2 ≃ G`, up to the canonical subdivision. Tests that the cellulation constructor loses no flag data.
+4. `M.toGMap2.toCombinatorialMap ≃ M` after choosing the induced orientation. Tests the orientation encoding.
+5. `G.dual.dual ≃  G`, with canonically homeomorphic realizations.
+6. Converting a schema to a generalized map recovers both its glued edge-pairs and its singleton boundary edges, up to cyclic equivalence and relabelling.
 
-**Examples and mathematical checks.** ⚠ **Exhibit two non-isomorphic surface cellulations with the same
-incidence poset.** One such example retires the "why is this not just a poset" objection
-permanently and is the justification for `Cellulation2` carrying side-incidence data at all.
-Draw it from the Damiand–Lienhardt figures.
+**Examples and mathematical checks.** ⚠ **Exhibit two non-isomorphic surface cellulations with the same incidence poset.** This answers the question "why is this not just a poset?" and justifies `Cellulation2` carrying side-incidence data. Source: figures in Damiand–Lienhardt.  Each conversion is worked out on the layer 1 example table. Degenerate examples show why the hypotheses of the comparison theorems are necessary.
 
-Each conversion is worked out on the layer 1 example table. Degenerate examples show why
-the hypotheses of the comparison theorems are necessary.
-
-**Natural intermediate results.** (i) oriented maps and the conversion; (ii) hypermaps and the
-conversion; (iii) cellulations and the conversion; (iv) polygonal schemas and the
-conversion; (v) comparison theorems 3, 4, and 6; (vi) the poset counter-example.
+**Natural intermediate results.** (i) oriented maps and the conversion; (ii) hypermaps and the conversion; (iii) cellulations and the conversion; (iv) polygonal schemas and the conversion; (v) comparison theorems 3, 4, and 6; (vi) the poset counter-example.
 
 ---
 
@@ -391,8 +331,7 @@ conversion; (v) comparison theorems 3, 4, and 6; (vi) the poset counter-example.
 
 Where the finite side meets [PlanarTopology](../PlanarTopology/README.md).
 
-**From PlanarTopology.** `IsCombinatorialSurface`, its realization theorem, the
-Hauptvermutung.
+**From PlanarTopology.** `IsCombinatorialSurface`, its realization theorem, the Hauptvermutung.
 
 **Representative formal statements.**
 
@@ -427,35 +366,22 @@ theorem flagComplex_toGMap2 (hK : IsCombinatorialSurface K) :
     K.toGMap2.flagComplex ≅ K.barycentricSubdivision
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- ⚠ Do not define realization through `AbstractSimplicialComplex`. See the encoding
-  conventions and the `aa` counter-witness.
-- The subdivision needed for the bridge may be one barycentric step or two, depending on the
-  map. State the theorem for the canonical subdivision that makes the flag triple injective
-  and prove that it does; do not assert a fixed number of steps.
+- ⚠ Do not define realization through `AbstractSimplicialComplex`. 
+- The subdivision needed for the bridge may be one barycentric step or two, depending on the map. 
 
-**Examples and mathematical checks.** The `aa` generalized map from the encoding conventions is a
-certified counter-witness: it is a valid surface map, its flag triple map is **not**
-injective, and its unsubdivided flag complex has one triangle where the map has four darts.
-Realization is checked to produce the correct Euler characteristic on the full layer 1
-table, through `PlanarTopology`'s `Surface.eulerChar`, not through `GMap2.eulerChar`.
+**Examples and mathematical checks.** The `aa` generalized map from the encoding conventions is a certified counter-witness: it is a valid surface map, its flag triple map is **not** injective, and its unsubdivided flag complex has one triangle where the map has four darts. Realization is checked to produce the correct Euler characteristic on the full layer 1 table, through `PlanarTopology`'s `Surface.eulerChar`, not through `GMap2.eulerChar`.
 
-**Natural intermediate results.** (i) the gluing setoid and the quotient topology; (ii) compactness and
-the surface property; (iii) the flag triple, injectivity after subdivision, and the
-counter-witness; (iv) the homeomorphism with the flag complex realization;
-(v) `exists_gmap_of_compactSurface`; (vi) Euler characteristic agreement.
+**Natural intermediate results.** (i) the gluing setoid and the quotient topology; (ii) compactness and the surface property; (iii) the flag triple, injectivity after subdivision, and the counter-witness; (iv) the homeomorphism with the flag complex realization; (v) `exists_gmap_of_compactSurface`; (vi) Euler characteristic agreement.
 
-**Consequences.** Everything below, and `GeometricTopology` layer 11's dimension-two case.
+**Consequences.** `GeometricTopology` layer 11's dimension-two case.
 
 ---
 
 ## Layer 4: Topological operations on generalized maps
 
-This layer separates two kinds of operation. Subdivision, admissible contraction, and
-duality preserve the represented surface. Connected sum, cutting, the orientation cover,
-capping, and doubling change it in controlled ways. Each operation is accompanied by its
-precise theorem on realizations and invariants, not only by orbit-count identities.
+This layer separates two kinds of operation. Subdivision, admissible contraction, and duality preserve the represented surface. Connected sum, cutting, the orientation cover, capping, and doubling change it in controlled ways. Each operation is accompanied by its precise theorem on realizations and invariants, not only by orbit-count identities.
 
 **Representative formal statements.**
 
@@ -494,50 +420,26 @@ theorem GMap2.cap_isConnected (hG : G.IsConnected) : G.cap.IsConnected
 theorem GMap2.double_eulerChar : G.double.eulerChar = 2 * G.eulerChar
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- The **orientation double cover** is a genuine covering map and works for surfaces with
-  boundary. The orientation character is trivial on each boundary component because a
-  collar supplies a two-sided neighbourhood; consequently every boundary circle lifts to
-  two boundary circles, each mapping homeomorphically to the original one. This behaviour
-  should be included in the covering theorem.
-- ⚠ The **double** `DM = M ∪_∂M M` is *not* a covering. It is a quotient by an involution
-  with fixed points, `Fix σ = ∂M` and `DM/σ = M`. No covering space can remove boundary: a
-  covering map is a local homeomorphism, boundary is a local property, so `∂M = ∅` if and
-  only if the cover has empty boundary. Record the double for its Euler characteristic
-  identity and for later use; do not attempt to derive triangulation with boundary from it,
-  which would require an equivariant triangulation theorem.
-- An edge contraction preserves the surface only under the appropriate link or
-  non-degeneracy condition; being a non-loop is not sufficient. Its realization theorem
-  should state the exact admissibility hypothesis.
-- Ordinary duality preserves the class of surface maps cleanly in the closed case. With
-  boundary, reversing the involutions moves fixed points from `α₂` to `α₀`, so a relative or
-  capped dual requires a separate definition rather than the closed-surface theorem.
-- **Capping** is the operation that makes the classification with boundary cheap: every
-  compact surface with boundary is a closed surface minus `b` open discs. That reduction is
-  layer 8's main structural simplification.
-- Do not build the Petrie dual or higher-dimensional operations. They were "where
-  algebraically natural" in an earlier draft, which is not a target.
+- The **orientation double cover** a covering map for surfaces with boundary. The orientation character is trivial on each boundary component because a collar supplies a two-sided neighbourhood; consequently every boundary circle lifts to two boundary circles, each mapping homeomorphically to the original one. (This behaviour should be included in the covering theorem.)
+- ⚠ The **double** `DM = M ∪_∂M M` a quotient by an involution with fixed points, `Fix σ = ∂M` and `DM/σ = M`.  Record the double for its Euler characteristic identity and for later use. ⚠ Do not attempt to derive triangulation with boundary from it, that would require an equivariant triangulation theorem.
+- An edge contraction preserves the surface only under the appropriate link or non-degeneracy condition. Its realization theorem should state the exact admissibility hypothesis (being a non-loop is not sufficient).
+- Ordinary duality preserves the class of surface maps cleanly in the closed case. With boundary, reversing the involutions moves fixed points from `α₂` to `α₀`, so a relative or capped dual version is needed.
+- **Capping** is the operation that simplifies the classification with boundary: every compact surface with boundary is a closed surface minus `b` open discs. That reduction is layer 8's main structural simplification.
+- Do not build the Petrie dual or higher-dimensional operations. 
 
-**Examples and mathematical checks.** `dual (dual G) ≅ G` is checked on the closed maps
-in the layer 1 table (comparison theorem 5).
-`orientationDoubleCover` of the projective plane map is the sphere map, of the Klein bottle
-map is the torus map, and of an already orientable map is disconnected. `cap` of the disc
-map is the sphere map. `double` of the Möbius band map is the Klein bottle map. All by
-`decide` on the explicit maps.
+**Examples and mathematical checks.** `dual (dual G) ≃ G` is checked on the closed maps in the layer 1 table (comparison theorem 5). `orientationDoubleCover` of the projective plane is the sphere map, of the Klein bottle map is the torus map, and of an already orientable map is disconnected. `cap` of the disc map is the sphere map. `double` of the Möbius band map is the Klein bottle map. All by `decide` on the explicit maps.
 
-**Natural intermediate results.** (i) subdivision operations; (ii) contraction and deletion;
-(iii) duality; (iv) connected sum; (v) cutting along a combinatorial curve;
-(vi) orientation double cover; (vii) capping and doubling.
+**Natural intermediate results.** (i) subdivision operations; (ii) contraction and deletion; (iii) duality; (iv) connected sum; (v) cutting along a combinatorial curve; (vi) orientation double cover; (vii) capping and doubling.
 
 ---
 
 ## Layer 5: Embedded graphs and the Heffter–Edmonds–Ringel theorem
 
-The external validation of the whole finite model. It says the maps are not merely an
-adequate encoding of embedded graphs but exactly the right one.
+This externally validates the finite model.  It says the maps are not merely an adequate encoding of embedded graphs but the right one.
 
-**From layers 1–4.** **From Mathlib.** the multigraph `Graph α β`; ⚠ verify its API first.
+**From Mathlib.** the multigraph `Graph α β`; ⚠ verify its API first.
 
 **Representative formal statements.**
 
@@ -549,6 +451,10 @@ def GraphEmbedding.IsCellular : Prop   -- every face is an open disc
 
 def RotationSystem (Γ : Graph α β) : Type* := ...
 def SignedRotationSystem (Γ : Graph α β) : Type* := ...
+
+theorem cellularEmbeddings_equiv_gmaps (Γ : Graph α β) (hΓ : Γ.Connected) :
+    CellularEmbeddings Γ / EquivalenceOfEmbeddings
+      ≃ {G : BundledGMap2 // G.underlyingGraph ≃ Γ} / GMap2.Iso
 
 /-- Heffter--Edmonds--Ringel, orientable form. -/
 theorem orientedCellularEmbeddings_equiv_rotationSystems
@@ -570,14 +476,11 @@ def Graph.genus (Γ : Graph α β) : ℕ            -- needs layer 8
 def Graph.nonorientableGenus (Γ : Graph α β) : ℕ
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- ⚠ The correspondence is only for **cellular** embeddings. A graph embedded in a torus with
-  a non-disc face is the counter-witness and must appear in the examples and mathematical checks.
-- The orientable case runs on `CombinatorialMap` (rotation systems); the general case needs
-  the signed or generalized-map version. State both.
-- `Graph.genus` minimises over surfaces and therefore waits on layer 8; the HER
-  correspondence and Euler formula do not.
+- ⚠ The correspondence is only for **cellular** embeddings. A graph embedded in a torus with a non-disc face is the counter-witness and is given in the examples and mathematical checks.
+- The general case needs the signed or generalized-map version. The standard theorem for the orientable case is stated in terms of `CombinatorialMap` (rotation systems).  Derive the latter from the former
+- `Graph.genus` minimises over surfaces and therefore waits on layer 8; the HER correspondence and Euler formula do not.
 
 **Examples and mathematical checks.** `K₅` and `K₃,₃` have genus 1 and embed cellularly in the torus.
 `IsCellular` is **false** for `K₄` drawn inside a disc in the torus. Euler's formula is
@@ -591,9 +494,7 @@ correspondence; (vi) Euler's formula; (vii) genus, after layer 8.
 
 ## Layer 6: Polygonal schemas and normal forms
 
-The main theorem is stated for closed schemas. The classification with boundary in layer 8
-uses capping to reduce to this theorem, so a second normal-form algorithm for boundary words
-is not required on the critical path.
+The classification theorem is stated for closed schemas. The classification with boundary in layer 8 uses capping to reduce to this theorem.
 
 **Representative formal statements.**
 
@@ -623,38 +524,20 @@ theorem SchemaMove.realization_homeomorph (h : SchemaMove S T) :
     S.toGMap2.realization ≃ₜ T.toGMap2.realization
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- ⚠ Every move changes the label type. The isomorphism closure from layer 0 is what makes
-  `ReflTransGen` usable. Do not fix an alphabet.
-- The reduction is the classical closed-surface algorithm: merge to one polygon, cancel
-  adjacent inverse pairs, make the schema have a single vertex class, group crosscaps, group
-  handles, and convert a handle plus a crosscap into three crosscaps (Dyck's theorem). Each step needs its realization theorem
-  from `SchemaMove.realization_homeomorph`, not a separate argument.
-- Dyck's theorem, `handle + crosscap = 3 crosscaps`, is the step most often skipped and is
-  what makes the normal forms exhaustive rather than merely available.
+- ⚠ Every move changes the label type. The isomorphism closure from layer 0 is what makes `ReflTransGen` usable. Do not fix an alphabet.
+- The reduction is the classical closed-surface algorithm: merge to one polygon, cancel adjacent inverse pairs, make the schema have a single vertex class, group crosscaps, group handles, and convert a handle plus a crosscap into three crosscaps (Dyck's theorem). Each step needs its realization theore, from `SchemaMove.realization_homeomorph`, not a separate argument.
 
-**Examples and mathematical checks.** The reduction is run on `abab⁻¹` (the Klein
-bottle), `aabb` (the same surface, reaching the same normal form), and
-`abca⁻¹b⁻¹c⁻¹` (a nontrivial six-edge schema). A label occurring once is accepted as a
-boundary edge; a label occurring three times, or a pairing with an invalid local incidence,
-must fail `IsSurface`.
+**Examples and mathematical checks.** The reduction is run on `abab⁻¹` (the Klein bottle), `aabb` (the same surface, reaching the same normal form), and `abca⁻¹b⁻¹c⁻¹` (a nontrivial six-edge schema). A label occurring once is accepted as a boundary edge; a label occurring three times, or a pairing with an invalid local incidence, must fail `IsSurface`.
 
-**Natural intermediate results.** (i) schemas and the surface condition; (ii) the moves and
-isomorphism closure; (iii) realization invariance of each move; (iv) reduction to a single
-vertex class; (v) handle and crosscap grouping; (vi) Dyck's theorem; (vii) the closed
-orientable and nonorientable normal forms; (viii) the relative theorem for distinguished cap
-faces.
+**Natural intermediate results.** (i) schemas and the surface condition; (ii) the moves and isomorphism closure; (iii) realization invariance of each move; (iv) reduction to a single vertex class; (v) handle and crosscap grouping; (vi) Dyck's theorem; (vii) the closed orientable and nonorientable normal forms; (viii) the relative theorem for distinguished cap faces.
 
 ---
 
 ## Layer 7: Cellulation homology and the edge-path group
 
-This layer attaches finite chain complexes and finite group presentations to a cellulation.
-The chain complex and its homology lie on the classification path; the edge-path group is a
-natural companion branch that records the nonabelian presentation before abelianization.
-Both are combinatorial models of familiar topological invariants, but their comparison with
-singular homology and the topological fundamental group is deliberately deferred.
+This layer attaches finite chain complexes and finite group presentations to a cellulation. The chain complex and its homology are needed for classification.  The edge-path group is a natural companion that records the nonabelian presentation before abelianization. Both are combinatorial models of familiar topological invariants, but their comparison with singular homology and the topological fundamental group is out of scope.
 
 **Representative formal statements.**
 
@@ -698,37 +581,22 @@ theorem homology_normalFormNonorientable (k : ℕ) (hk : 0 < k) :
     (normalFormNonorientable k hk).homology ℤ 1 ≅ (ℤ : Type) ^ (k - 1) × ZMod 2
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- Abelianizing a presentation turns relators into the columns of the boundary matrix, so
-  `abelianization_edgePathGroup` is a mechanical algebraic theorem and not a topological one.
-  This is Munkres' route with the topology removed.
-- ⚠ Use `Mathlib.Algebra.Module.PID`, not `TauCeti/LinearAlgebra/Matrix/SmithNormalForm.lean`,
-  which handles only square matrices of positive determinant.
-- ⚠ Do not attempt van Kampen. The edge-path group is defined combinatorially and its
-  invariance comes from the moves, so no comparison with `π₁` of the realization is needed.
-  Record the absence of that comparison as a known gap with its reason.
-- Cross-check opportunity: `TauCeti/AlgebraicTopology/UniversalCover/` already computes the
-  fundamental groups of the circle, the torus, and the real projective plane. Comparing those
-  against `edgePathGroup` of the corresponding normal forms is not a required target, but it
-  would be strong independent evidence and is worth attempting once for each.
+- Abelianizing a presentation turns relators into the columns of the boundary matrix, so `abelianization_edgePathGroup` is a mechanical algebraic theorem and not a topological one.  This is Munkres' strategy with the topology removed.
+- ⚠ Use `Mathlib.Algebra.Module.PID`, not `TauCeti/LinearAlgebra/Matrix/SmithNormalForm.lean`, which handles only square matrices of positive determinant.
+- ⚠ van Kampen is out of scope. The edge-path group is defined combinatorially and its invariance comes from the moves, so no comparison with `π₁` of the realization is needed.
+- Cross-check opportunity: `TauCeti/AlgebraicTopology/UniversalCover/` already computes the fundamental groups of the circle, the torus, and the real projective plane. Comparing those against `edgePathGroup` of the corresponding normal forms is not a required but it would be strong independent evidence and is worth attempting for these models.
 
-**Examples and mathematical checks.** The chain complexes of the layer 1 table are written out explicitly
-and `d_comp_d` is checked by `decide`. `homology_two_iff_orientable` is checked **false** for
-the Klein bottle and **true** for the torus. The `ZMod 2` torsion class in
-`homology_normalFormNonorientable` is exhibited, not merely asserted, since it is what
-distinguishes the nonorientable normal forms and an off-by-one here would be invisible.
+**Examples and mathematical checks.** The chain complexes of the layer 1 table are written out explicitly and `d_comp_d` is checked by `decide`. `homology_two_iff_orientable` is checked **false** for the Klein bottle and **true** for the torus. The `ZMod 2` torsion class in `homology_normalFormNonorientable` is exhibited, not merely asserted, since it is what distinguishes the nonorientable normal forms and an off-by-one here would be invisible.
 
 **Natural intermediate results.** (i) the chain complex and `d ∘ d = 0`; (ii) homology and Euler-Poincaré;
-(iii) `H₀` and connectedness; (iv) `H₂` and orientability; (v) the edge-path group and its
-presentation; (vi) abelianization; (vii) free groups for graphs; (viii) the normal-form
-computations; (ix) invariance under the moves.
+(iii) `H₀` and connectedness; (iv) `H₂` and orientability; (v) the edge-path group and its presentation; (vi) abelianization; (vii) free groups for graphs; (viii) the normal-form computations; (ix) invariance under the moves.
 
 ---
 
 ## Layer 8: The classification of compact surfaces
 
-**From PlanarTopology.** Radó, the Hauptvermutung, Euler characteristic.
 
 **Representative formal statements.**
 
@@ -766,51 +634,27 @@ theorem exists_closed_minus_discs (M : Type*) [CompactConnectedSurface M] :
     ∃ (N : Type) (_ : ClosedConnectedSurface N) (b : ℕ), Nonempty (M ≃ₜ N.minusDiscs b)
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- Existence: Radó gives a triangulation, layer 3 gives a generalized map, layer 6 reduces the
-  schema to normal form, and layer 4's realization theorems transport the homeomorphism back.
-- Uniqueness: layer 7's invariants separate the normal forms. Euler characteristic separates
-  within each family, orientability separates the families, and boundary count is preserved
-  because ⚠ `∂M` is a topological invariant only by `PlanarTopology`'s
-  `invarianceOfDomain₂`. Cite it.
-- ⚠ The `∃!` form is the library statement. A quotient-and-representative form, of the kind
-  lean-eval statements use, is a bad library statement and should appear only in a bridge
-  file if at all.
-- The boundary case goes through `exists_closed_minus_discs`, via layer 4's `cap`, but the
-  attached discs cannot simply be forgotten. One must either carry the cap faces as marked
-  faces through the relative normal-form theorem of layer 6, or prove an ambient theorem
-  that any two finite families of disjoint discs in a connected surface are equivalent. The
-  relative combinatorial route avoids importing Schoenflies into the classification path.
+- Existence: Radó gives a triangulation, layer 3 gives a generalized map, layer 6 reduces the schema to normal form, and layer 4's realization theorems transport the homeomorphism back.
+- Uniqueness: layer 7's invariants separate the normal forms. Euler characteristic separates within each family, orientability separates the families, and boundary count is preserved because ⚠ `∂M` is a topological invariant only by `PlanarTopology`'s
+  `invarianceOfDomain₂`.
+- ⚠ The `∃!` form is the form for the library. A quotient-and-representative form, of the kind lean-eval statements use, is a a bridge if it appears at all.
+- The boundary case leverages `exists_closed_minus_discs`, via layer 4's `cap`, but the attached discs cannot simply be forgotten. One must either carry the cap faces as marked faces through the relative normal-form theorem of layer 6, or prove an ambient theorem that any two finite families of disjoint discs in a connected surface are equivalent. In any case, avoid using Schoenflies for the classification, it's not needed.
 
-**Examples and mathematical checks.** The classification is instantiated on a surface presented only by
-charts, with no combinatorial data supplied, and produces the correct `StandardSurface`.
-The completeness statement is accompanied by a sharpness table. If Euler characteristic is
-dropped, the torus and the closed orientable genus-two surface agree on orientability and
-boundary count. If orientability is dropped, the torus and Klein bottle agree on Euler
-characteristic and boundary count. If boundary count is dropped, the torus and annulus agree
-on Euler characteristic and orientability. Dyck's theorem is exercised by identifying a
-torus connected-summed with a projective plane with the nonorientable genus-three surface.
+**Examples and mathematical checks.** The classification is instantiated on a surface presented only by charts, with no combinatorial data supplied, and produces the correct `StandardSurface`. The completeness statement is accompanied by a sharpness table. If Euler characteristic is dropped, the torus and the closed orientable genus-two surface agree on orientability and boundary count. If orientability is dropped, the torus and Klein bottle agree on Euler characteristic and boundary count. If boundary count is dropped, the torus and annulus agree on Euler characteristic and orientability. Dyck's theorem is exercised by identifying a torus connected-summed with a projective plane with the nonorientable genus-three surface.
 
-**Natural intermediate results.** (i) `StandardSurface` and its models; (ii) existence in
-the closed case; (iii) capping with marked cap faces; (iv) relative reduction and
-uncapping; (v) existence with boundary; (vi) uniqueness; (vii) the complete invariant and
-its sharpness table.
+**Natural intermediate results.** (i) `StandardSurface` and its models; (ii) existence in the closed case; (iii) capping with marked cap faces; (iv) relative reduction and uncapping; (v) existence with boundary; (vi) uniqueness; (vii) the complete invariant and its sharpness table.
 
-**Consequences.** `GeometricTopology` layer 9. Layer 5's `Graph.genus`. Layer 9.
+**Consequences.** `GeometricTopology` layer 9. Layer 5's `Graph.genus`. 
 
 ---
 
 ## Follow-on layer 9: Curves, cutting, and mapping class groups
 
-This is a follow-on to the classification theorem rather than an input to it. Its first task
-is to fix the convention that the theorem statements use: for oriented surfaces, Dehn twists
-and the Lickorish theorem concern orientation-preserving mapping classes; for surfaces with
-boundary, the standard base cases use homeomorphisms and isotopies fixing the boundary
-pointwise. The full mapping class group is recorded separately.
+To fix the convention that the theorem statements use: For oriented surfaces, Dehn twists and the Lickorish theorem concern orientation-preserving mapping classes. For surfaces with boundary, the standard base cases use homeomorphisms and isotopies fixing the boundary pointwise. The full mapping class group is stated separately.
 
-**From PlanarTopology.** Schoenflies, tameness of arcs and simple closed curves in a surface,
-and isotopy to a PL homeomorphism.
+**From PlanarTopology.** Schoenflies, tameness of arcs and simple closed curves in a surface, and isotopy to a PL homeomorphism.
 
 **Representative formal statements.**
 
@@ -862,33 +706,16 @@ theorem mcg_pl_eq_smooth {M} [CompactOrientedSurface M] :
     MappingClassGroupPLPlus M ≃* MappingClassGroupSmoothPlus M
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- A **Dehn twist** about a simple closed curve is supported in an annular neighbourhood,
-  rotates once across the annulus, and is the identity outside. Tameness and the collar
-  theorem from `PlanarTopology` provide the annulus, while the isotopy class is independent
-  of the chosen collar.
-- The distinction between `MappingClassGroupPlus` and `MappingClassGroupFull` is essential.
-  Dehn twists generate the orientation-preserving group: for the torus this is
-  `SL(2,ℤ)`, whereas the full group is `GL(2,ℤ)`. Likewise, the usual disc and annulus base
-  cases require the boundary to be fixed pointwise.
-- Target Lickorish's generating set of `3g - 1` twists. Humphries' minimal `2g + 1` set and
-  its minimality proof are a separate theorem and remain out of scope.
-- Do not write “of finite type” for compact surfaces. In this literature the phrase normally
-  signals punctures as well as boundary components, leading to the Birman exact sequence and
-  point-pushing, which are not part of this layer.
+- A **Dehn twist** about a simple closed curve is supported in an annular neighbourhood, rotates once across the annulus, and is the identity outside. Tameness and the collar theorem from `PlanarTopology` provide the annulus, while the isotopy class is independent of the chosen collar.
+- The distinction between `MappingClassGroupPlus` and `MappingClassGroupFull` is essential. Dehn twists generate the orientation-preserving group: for the torus this is `SL(2,ℤ)`, whereas the full group is `GL(2,ℤ)`. Likewise, the usual disc and annulus base cases require the boundary to be fixed pointwise.
+- Target Lickorish's generating set of `3g - 1` twists. Humphries' minimal `2g + 1` set and its minimality proof are a separate theorem and remain out of scope.
+- Do not write “of finite type” for compact surfaces. In this literature the phrase normally signals punctures as well as boundary components, leading to the Birman exact sequence and point-pushing, which are out of scope.
 
-**Examples and mathematical checks.** On the torus, twists about the two standard curves
-map to the elementary generators of `SL(2,ℤ)`. A separating and a nonseparating curve on a
-genus-two surface show that the nonseparating hypothesis in the change-of-coordinates
-principle is necessary. A twist about a curve bounding a disc represents the identity
-mapping class.
+**Examples and mathematical checks.** On the torus, twists about the two standard curves map to the elementary generators of `SL(2,ℤ)`. A separating and a nonseparating curve on a genus-two surface show that the nonseparating hypothesis in the change-of-coordinates principle is necessary. A twist about a curve bounding a disc represents the identity mapping class.
 
-**Natural intermediate results.** (i) simple closed curves, essentiality, and separation;
-(ii) cutting and its Euler characteristic; (iii) full, positive, and relative-boundary
-mapping class groups; (iv) the base cases; (v) Dehn twists; (vi) the
-change-of-coordinates principle; (vii) the torus computations; (viii) the Lickorish
-induction; (ix) the category comparisons.
+**Natural intermediate results.** (i) simple closed curves, essentiality, and separation; (ii) cutting and its Euler characteristic; (iii) full, positive, and relative-boundary mapping class groups; (iv) the base cases; (v) Dehn twists; (vi) the change-of-coordinates principle; (vii) the torus computations; (viii) the Lickorish induction; (ix) the category comparisons.
 
 **Consequences.** `GeometricTopology` layer 9.
 
@@ -896,24 +723,11 @@ induction; (ix) the category comparisons.
 
 ## Follow-on layer 10: Planarity
 
-This layer is not needed for the classification theorem. It is a substantial mathematical
-extension that tests the embedding, duality, and cellulation theories against the classical
-theorems of planar graph theory: Kuratowski tests embeddings, Whitney tests the interaction
-between connectivity and duality, Mac Lane compares cycle-space algebra with planarity, and
-the five-colour theorem carries the plane-map theory to a nontrivial conclusion.
+This layer is not needed for the classification theorem. It is a substantial mathematical extension that tests the embedding, duality, and cellulation theories against the classical theorems of planar graph theory: Kuratowski tests embeddings, Whitney tests the interaction between connectivity and duality, Mac Lane compares cycle-space algebra with planarity, and the five-colour theorem carries the plane-map theory to a nontrivial conclusion.
 
-The intended scope is **Mohar and Thomassen, *Graphs on Surfaces*, chapter 2**, together
-with Fáry's theorem and Wagner's theorem. This chapter-level description makes the theorem
-list externally checkable without suggesting that the roadmap covers all of topological
-graph theory.
+The intended scope is **Mohar and Thomassen, *Graphs on Surfaces*, chapter 2**, together with Fáry's theorem and Wagner's theorem. This is not intended to be a full roadmap of topological graph theory.
 
-**Excluded, with reasons:** planarity-testing algorithms such as Hopcroft–Tarjan and
-LR-planarity (the theorems are the target, not the algorithms); Steinitz's theorem (a
-convexity theorem needing polytope machinery not built here); embeddings in general surfaces,
-face-width, edge-width, embedding extension, and Robertson–Seymour (a separate subject and a
-separate roadmap); Grötzsch's theorem (named as a known gap rather than silently omitted);
-the four colour theorem and the Heawood/Ringel–Youngs map colour theorem (see the
-roadmap-for-a-roadmap below).
+**Out of scope:** planarity-testing algorithms such as Hopcroft–Tarjan and LR-planarity (the theorems are the target, not the algorithms); Steinitz's theorem (a convexity theorem needing polytope machinery not built here); embeddings in general surfaces, face-width, edge-width, embedding extension, and Robertson–Seymour (a separate subject and a separate roadmap); Grötzsch's theorem (named as a known gap rather than silently omitted); the four colour theorem and the Heawood/Ringel–Youngs map colour theorem (see the roadmap-for-a-roadmap below).
 
 **Representative formal statements.**
 
@@ -966,41 +780,18 @@ theorem five_colour (Γ : Graph α β) (hs : Γ.IsSimple) (h : Γ.IsPlanar) :
     Γ.Colorable 5
 ```
 
-**Mathematical route and formalization notes.**
+**Proof strategy and formalization notes.**
 
-- ⚠ Use **Thomassen's** proof of Kuratowski, via contracting an edge in a 3-connected graph.
-  It is shorter and considerably more formalization-friendly than the Tutte and Bondy–Murty
-  route through bridges and conflict graphs. The 3-connectivity machinery it needs (the wheel
-  theorem, contractible edges) is shared with Whitney.
-- The dual of a simple plane graph need not be simple, which is why duality lives on
-  multigraphs and why layer 1 refused `SimpleGraph` as the foundation.
-- Fáry's absence from a planarity roadmap is the first thing a combinatorialist notices.
-  Prove it by induction on a vertex of degree at most five in a maximal planar graph.
-- Whitney's unique-embedding theorem and Whitney's 2-isomorphism theorem are different
-  results. Target both, and do not cite the 2-isomorphism paper for the unique-embedding
-  statement. The unique-embedding theorem is uniqueness up to a homeomorphism of the sphere,
-  allowing orientation reversal; with orientation-preserving equivalence, the two mirror-image
-  embeddings remain distinct.
-- Tutte's spring embedding is a linear-algebra argument and is unusually formalization-friendly
-  for its strength. Its precise form fixes a facial cycle as a convex outer polygon and produces
-  a straight-line embedding with convex faces. It is the natural bridge toward Steinitz without
-  committing to Steinitz.
+- ⚠ Use **Thomassen's** proof of Kuratowski, via contracting an edge in a 3-connected graph. It is shorter and considerably more formalization-friendly than the Tutte and Bondy–Murty's approach using bridges and conflict graphs. Also, the 3-connectivity machinery it needs (the wheel theorem, contractible edges) is shared with Whitney.
+- The dual of a simple plane graph need not be simple, which is why duality lives on multigraphs and why layer 1 didn't build on `SimpleGraph` as the foundation.
+- Tutte's spring embedding is a linear-algebra argument and is unusually formalization-friendly for its strength. Its precise form fixes a facial cycle as a convex outer polygon and produces a straight-line embedding with convex faces. It is the natural bridge toward Steinitz.
+- Prove Fáry via Tutte. Given simple planar Γ on at least 4 vertices, add edges within a fixed embedding until it is maximal planar. Maximal planar graphs on at least 4 vertices are 3-connected. Apply Tutte, then delete the added edges. The remaining segments are still non-crossing.
+- Whitney's unique-embedding theorem and Whitney's 2-isomorphism theorem are different results. Target both, and do not cite the 2-isomorphism paper for the unique-embedding statement. The unique-embedding theorem is uniqueness up to a homeomorphism of the sphere, allowing orientation reversal; with orientation-preserving equivalence, the two mirror-image embeddings remain distinct.
 
 **Examples and mathematical checks.** Explicit finite models verify that `K₅` and `K₃,₃`
-are non-planar and that `K₄` is planar.
-`edge_bound_of_planar` is checked to **fail** for a multigraph with parallel edges, exhibiting
-the necessity of `IsSimple`. `whitney_unique_embedding` is checked to **fail** for a
-2-connected but not 3-connected planar graph, with two inequivalent embeddings exhibited.
-`maclane` is checked against `K₅`, whose cycle space has no sparse basis. Five-colouring is
-computed on a concrete triangulation with a degree-5 vertex requiring a Kempe chain
-interchange.
+are non-planar and that `K₄` is planar. `edge_bound_of_planar` is checked to **fail** for a multigraph with parallel edges, exhibiting the necessity of `IsSimple`. `whitney_unique_embedding` is checked to **fail** for a 2-connected but not 3-connected planar graph, with two inequivalent embeddings exhibited. `maclane` is checked against `K₅`, whose cycle space has no sparse basis. Five-colouring is computed on a concrete triangulation with a degree-5 vertex requiring a Kempe chain interchange.
 
-**Natural intermediate results.** (i) plane embeddings, faces, and Euler's formula; (ii) the edge bound
-and the degree-5 lemma; (iii) minors, topological minors, and minor-closure; (iv) the
-3-connectivity machinery; (v) Kuratowski; (vi) Wagner and the equivalence; (vii) peripheral
-cycles; (viii) Whitney unique embedding; (ix) Whitney 2-isomorphism; (x) cycle and cut
-spaces; (xi) planar duality of the two spaces; (xii) Mac Lane; (xiii) Fáry;
-(xiv) Tutte's spring embedding; (xv) the five-colour theorem.
+**Natural intermediate results.** (i) plane embeddings, faces, and Euler's formula; (ii) the edge bound and the degree-5 lemma; (iii) minors, topological minors, and minor-closure; (iv) the 3-connectivity machinery; (v) Kuratowski; (vi) Wagner and the equivalence; (vii) peripheral cycles; (viii) Whitney unique embedding; (ix) Whitney 2-isomorphism; (x) cycle and cut spaces; (xi) planar duality of the two spaces; (xii) Mac Lane; (xiii) Tutte's spring embedding;(xiv) Fáry; (xv) the five-colour theorem.
 
 ---
 
@@ -1008,26 +799,15 @@ spaces; (xi) planar duality of the two spaces; (xii) Mac Lane; (xiii) Fáry;
 
 This section is motivation for a separate future roadmap and is not work here.
 
-With plane maps, duality, Euler's formula, and the five-colour theorem in place, the four
-colour theorem becomes a specification problem rather than a foundations problem: an
-unavoidable set, discharging configurations, and a verified reducibility check. Gonthier's
-Coq development is the reference for how the statement and the discharging argument should be
-encoded, and its use of hypermaps is the reason this roadmap builds on permutations rather
-than on `SimpleGraph`. The Heawood map colour theorem and the Ringel–Youngs solution for
-higher genus are the natural companions, and they consume layer 5's `Graph.genus`.
-
-An author for this is needed. It is a large project and the value of a roadmap for it is
-mostly in pinning down the mathematical encoding of unavoidability and reducibility before
-formalization begins.
+With plane maps, duality, Euler's formula, and the five-colour theorem in place, the four colour theorem becomes a specification problem rather than a foundations problem: an unavoidable set, discharging configurations, and a verified reducibility check. Gonthier's Coq development is the reference for how the statement and the discharging argument should be
+encoded, and its use of hypermaps is the reason this roadmap  on permutations rather than on `SimpleGraph`. The Heawood map colour theorem and the Ringel–Youngs solution for higher genus are the natural companions, and they consume layer 5's `Graph.genus`.
 
 ---
 
 ## Out of scope
 
-- Everything in [PlanarTopology](../PlanarTopology/README.md): the Jordan curve theorem,
-  Schoenflies, Radó, the Hauptvermutung, the PL toolkit, invariance of domain, tameness.
-- Punctured surfaces, the Birman exact sequence, point pushing, and the mapping class groups
-  of surfaces with marked points.
+- Everything in [PlanarTopology](../PlanarTopology/README.md): the Jordan curve theorem, Schoenflies, Radó, the Hauptvermutung, the PL toolkit, invariance of domain, tameness.
+- Punctured surfaces, the Birman exact sequence, point pushing, and the mapping class groups of surfaces with marked points.
 - Humphries' minimal generating set and the presentation of the mapping class group.
 - Teichmüller theory, hyperbolic structures, and geodesic representatives.
 - Non-compact surfaces and their classification.
@@ -1038,84 +818,16 @@ formalization begins.
 - Dessins d'enfants, ribbon graphs, and the Galois action, which are natural follow-ons to
   layers 1 through 5 but are a different subject.
 
----
-
-## Provenance and prior art
-
-**Disclosure.** The author of this roadmap is the author of
-`mccorvie/classification-of-surfaces`, cited below. That repository is prior art, not a
-specification.
-
-| Development | Licence | Coordination | What it evidences |
-|---|---|---|---|
-| `mccorvie/classification-of-surfaces` | Apache-2.0 | authored by this roadmap's author | that the classification closes end to end, and where the definitional risks are |
-| Dufourd and collaborators, Coq generalized maps and hypermaps; Dehlinger–Dufourd, *Formalizing generalized maps in Coq* | — | design reference | that a permutation model materially reduces effort on plane topology |
-| Gonthier, Coq four colour theorem | — | design reference | the hypermap encoding, and the discipline of deriving graphs from maps rather than the reverse |
-| Damiand and Lienhardt, *Combinatorial Maps* | — | design reference | the generalized map definition, the non-degeneracy conditions, and the incidence-poset counter-example |
-
-**Lessons from prior art.** The existing
-surface-classification development carried, for a period, a set of definitions on the
-polygonal-schema side that typechecked and were vacuous: `SurfaceCellModel`,
-`OrientableRel`, `realization`, `gluingRel`, and `Equivalent` admitted degenerate witnesses,
-while all files continued to typecheck. That experience motivates pairing each validity
-predicate with explicit positive and negative examples, defining realization constructively,
-and proving the comparison theorems of layer 2. The `aa` generalized map appears in the
-main discussion because it exposes a genuine distinction between flag data and an ordinary
-abstract simplicial complex.
-
----
-
-## Suggested order of development
-
-Layers 0 through 2 form an independent finite-combinatorial beginning and can be developed in
-parallel with `PlanarTopology`. The first mathematical checkpoint is not merely the
-existence of the definitions, but the example table and the comparison theorems connecting
-generalized maps, oriented maps, cellulations, schemas, and simplicial surfaces.
-
-Layer 3 is the bridge from finite data to topology. Its central theorem is the equivalence
-between the local combinatorial surface condition and disc or half-disc neighbourhoods in
-the realization. The exact formulation of `IsSurfaceGMap` should therefore be settled before
-later operations or invariants are built on it.
-
-After realization, two branches can proceed in parallel. Layers 4 and 5 develop operations
-and embedded graphs; layers 6 and 7 develop normal forms and finite invariants. They rejoin
-in layer 8, where Radó and the Hauptvermutung turn the finite normal-form theorem into the
-classification of arbitrary compact surfaces.
-
-The Heffter–Edmonds–Ringel theorem is the strongest external comparison for the chosen map
-model, while the classification theorem is the core summit. Layers 9 and 10 are follow-on
-extensions: they should not delay the realization–normal-form–classification path, though
-both can reuse its interfaces once those are stable.
-
-The displayed signatures are indicative. They should be elaborated against the current Tau
-Ceti vocabulary before work begins on a theorem, chiefly to verify that the mathematical
-objects and dependencies have been stated coherently.
-
----
-
+-
 ## References
 
-- G. Damiand and P. Lienhardt, *Combinatorial Maps: Efficient Data Structures for Computer
-  Graphics and Image Processing*. The definition of generalized maps, the non-degeneracy
-  conditions, and the operations in layer 4.
-- J.-F. Dufourd and collaborators, and Dehlinger–Dufourd, *Formalizing generalized maps in
-  Coq*. The prior formalization experience.
-- G. Gonthier, *Formal proof: the four-color theorem*, Notices AMS **55** (2008).
-  The hypermap encoding and the discipline of deriving graphs from maps.
-- S. Lando and A. Zvonkin, *Graphs on Surfaces and Their Applications*, chapter 1. The
-  identification of embedded graphs with combinatorial maps, which is layer 5.
-- B. Mohar and C. Thomassen, *Graphs on Surfaces*, chapter 2. The scope statement for
-  layer 10, and the route for Whitney and Mac Lane.
-- C. Thomassen, *Kuratowski's theorem*, J. Graph Theory **5** (1981). The proof route for
-  Kuratowski in layer 10.
-- W. B. R. Lickorish, *A finite set of generators for the homeotopy group of a 2-manifold*,
-  Proc. Cambridge Philos. Soc. **60** (1964). The generating set targeted in layer 9.
-- B. Farb and D. Margalit, *A Primer on Mapping Class Groups*, chapters 1–4. The
-  change-of-coordinates principle and the Lickorish induction as presented for a modern
-  reader.
-- J. R. Munkres, *Topology*, chapter 12. The classification via normal forms and
-  abelianization, which is the route in layers 6 through 8 with the topology replaced by the
-  Hauptvermutung.
-- E. Moise, *Geometric Topology in Dimensions 2 and 3*, chapter 8, and A. Gallier and
-  D. Xu, *A Guide to the Classification Theorem for Compact Surfaces*. The classification
-  itself.
+- G. Damiand and P. Lienhardt, *Combinatorial Maps: Efficient Data Structures for Computer  Graphics and Image Processing*. The definition of generalized maps, the non-degeneracy conditions, and the operations in layer 4.
+- J.-F. Dufourd and collaborators, and Dehlinger–Dufourd, *Formalizing generalized maps in Coq*. The prior formalization experience.
+- G. Gonthier, *Formal proof: the four-color theorem*, Notices AMS **55** (2008). The hypermap encoding and the discipline of deriving graphs from maps.
+- S. Lando and A. Zvonkin, *Graphs on Surfaces and Their Applications*, chapter 1. The identification of embedded graphs with combinatorial maps, which is layer 5.
+- B. Mohar and C. Thomassen, *Graphs on Surfaces*, chapter 2. The scope statement for layer 10, and the proof strategy for Whitney and Mac Lane.
+- C. Thomassen, *Kuratowski's theorem*, J. Graph Theory **5** (1981).  Kuratowski reference for layer 10.
+- W. B. R. Lickorish, *A finite set of generators for the homeotopy group of a 2-manifold*, Proc. Cambridge Philos. Soc. **60** (1964). The generating set targeted in layer 9.
+- B. Farb and D. Margalit, *A Primer on Mapping Class Groups*, chapters 1–4. The change-of-coordinates principle and the Lickorish induction as presented for a modern reader.
+- J. R. Munkres, *Topology*, chapter 12. The classification via normal forms and abelianization, which is the proof strategy in layers 6 through 8 with the topology replaced by the Hauptvermutung.
+- E. Moise, *Geometric Topology in Dimensions 2 and 3*, chapter 8, and A. Gallier and D. Xu, *A Guide to the Classification Theorem for Compact Surfaces*. The classification itself.
