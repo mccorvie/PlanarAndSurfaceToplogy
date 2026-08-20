@@ -199,7 +199,7 @@ theorem exists_jordanCurve_volume_pos : ∃ J : Set ℂ, IsJordanCurve J ∧ 0 <
 
 - Alexander's trick is short but needed in three places. L4 uses the PL version to correct the 2-skeleton and fills each triangle. L7 uses the topological version when it glues the two Schoenflies discs along the curve. L8 uses the isotopy form in exists_isotopic_plHomeomorph.
 
-- The space-filling curve is why the Jordan curve theorem needs injectivity, and the non rectifiable curve (Koch snowflake) shows why one may not assume a curve is rectifiable.  The positive measure Osgood curve is why one may not assume the curve is measure 0. 
+- The space-filling curve is why the Jordan curve theorem needs injectivity, and the non rectifiable curve (Koch snowflake) shows why one may not assume a curve is rectifiable.  The positive measure Osgood curve is why one may not assume the curve is measure 0.
 - ⚠ The Osgood construction may be deferred to layer 7 without blocking anything, if its difficult to formalize
 
 **Examples and mathematical checks.** The round trips for `planeEquiv`, `Circle`, and `AddCircle` are proved explicitly, and at least one metric theorem is transported through the plane equivalence. The space-filling curve is given by a concrete construction rather than by an unstructured existence assertion.
@@ -256,7 +256,7 @@ theorem not_planar_K33 : ¬ Nonempty (PlanarEmbedding (completeBipartiteGraph 3 
 
 - Crossing parity, not the winding number, is the primitive. It is `ZMod 2`-valued, it is decidable, and the crosscut identity is additive in it. The integer winding number and the comparison with `TauCeti/Analysis/Contour/Winding/` are corollaries.
 - ⚠ Do not restrict to lattice polygons.  You cannot inscribe a lattice polygon in an arbitrary Jordan curve, so the lattice version cannot serve layer 2. Re-derive at general-vertex generality.  (contrast with `rkirov/jordan_pick`)
-- Nonplanarity of `K₃,₃` is a **finite** statement provable from the polygonal crosscut theorem alone. This let's us bootstrap from polygons to arbitrary curves, and it is also consumed by `SurfaceTopology` layer 10. 
+- Nonplanarity of `K₃,₃` is a **finite** statement provable from the polygonal crosscut theorem alone. This let's us bootstrap from polygons to arbitrary curves, and it is also consumed by `SurfaceTopology` layer 10.
 - Ear-clipping is the engine of polygonal Schoenflies: triangulate a simple polygon by diagonals, then induct.
 
 **Examples and mathematical checks.** The crossing parity is computed in an exact worked example for a non-convex polygon and a point in a re-entrant pocket. A figure-eight polygonal loop shows that simplicity is essential in polygonal Jordan separation. The strict size hypothesis in the ear theorem is tested on a triangle, and a polygon with exactly two ears provides a sharp positive example.
@@ -269,7 +269,7 @@ theorem not_planar_K33 : ¬ Nonempty (PlanarEmbedding (completeBipartiteGraph 3 
 
 ## Layer 2: Separation, crosscuts, and invariance of domain
 
-The milestone of this layer is the crosscut theorem.  
+The milestone of this layer is the crosscut theorem.
 
 ⚠ Component count is a corollary of separation, but not the primary objective. The statement `Nat.card (ConnectedComponents Jᶜ) = 2` is not sufficient for  `ConformalMapping`'s length-area argument or roadmap's layer 7.
 
@@ -472,7 +472,7 @@ theorem hauptvermutung₂_isPL {K L} (hK : IsCombinatorialSurface K)
 
 **Mathematical route and formalization notes.**
 
-- Radó's construction grows an already triangulated region across a countable chart cover. On each overlap, the **local** form of the approximation theorem replaces a topological coordinate change by a controlled PL homeomorphism; this is the point at which the approximation theorem enters the triangulation proof.  
+- Radó's construction grows an already triangulated region across a countable chart cover. On each overlap, the **local** form of the approximation theorem replaces a topological coordinate change by a controlled PL homeomorphism; this is the point at which the approximation theorem enters the triangulation proof.
 - The collar theorem is the lever for the boundary case: push `∂M` inward along a collar, triangulate the interior, and extend combinatorially. If `TauCeti/Geometry/Manifold/Boundary/Collar/` is usable at the topological level; if not, the topological two-dimensional collar is a target here and a contribution back to `GeometricTopology` layer 1.
 - Locally finite triangulations of second-countable noncompact surfaces are built only insofar as the compact proof needs them, and the general noncompact Radó is out of scope.
 
@@ -559,7 +559,7 @@ theorem jordanCurve_neighborhood_dichotomy {M} [Surface M] {J : Set M}
 
 - No homeomorphism is built directly.  Instead this approach builds two matched finite cell decompositions, one of the closed interior and one of the closed square, isomorphic as cellulations and agreeing with a chosen boundary correspondencs.  It refines them alternately so that cells become small on both sides and constructs the homeomorphism off the nested closed stars. Every finite stage is a plane graph governed by layer 2's crosscut theorem. No polygonal approximation of the curve appears anywhere.
 - The matched cellulations here are finite approximating devices internal to this proof. They need not be identified with the realized `Cellulation2` objects of `SurfaceTopology`: the two constructions have different mathematical purposes.
-- An alternative derivation gives an independent cross-check: once `ConformalMapping` Carathéodory's theorem gives `closure hJ.inside ≃ₜ closed disc` from `riemannMapping`, and gluing the inside and outside discs along `J` gives `schoenflies` again. 
+- An alternative derivation gives an independent cross-check: once `ConformalMapping` Carathéodory's theorem gives `closure hJ.inside ≃ₜ closed disc` from `riemannMapping`, and gluing the inside and outside discs along `J` gives `schoenflies` again.
 
 **Examples and mathematical checks.** `schoenflies_closure` is instantiated on a curve that is not rectifiable. `isLocallyFlat_of_isArc_surface` is checked against `GeometricTopology`'s actual `IsLocallyFlat` predicate, not a local restatement. The core circle of a Möbius band is the essential counterexample to an unconditional product collar: it is tame and locally flat but one-sided. A note also records that automatic tameness fails in dimension three, where wild embeddings occur.
 

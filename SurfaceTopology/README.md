@@ -18,7 +18,7 @@ Layer 10 is best read as a mathematical validation and extension of the finite-m
 
 Each layer below is organized around its principal theorem, mathematical dependencies, and proof route. The Lean declarations are representative interfaces: they expose the intended connections to Tau Ceti without replacing the mathematicalstatements.
 
-> **Naming.** The directory name `CombinatorialMaps` describes the method; `SurfaceTopology` describes the subject.  
+> **Naming.** The directory name `CombinatorialMaps` describes the method; `SurfaceTopology` describes the subject.
 
 ---
 
@@ -26,11 +26,11 @@ Each layer below is organized around its principal theorem, mathematical depende
 
 ### This roadmap supplies
 
-| Consumer | What it needs | 
+| Consumer | What it needs |
 |---|---|
-| `GeometricTopology` layer 9 | the classification of closed orientable surfaces, for the splitting surface | 
+| `GeometricTopology` layer 9 | the classification of closed orientable surfaces, for the splitting surface |
 | `GeometricTopology` layer 9 | surface mapping classes |
-| a future Four Colour roadmap | plane maps, duality, Euler's formula, the five-colour theorem | 
+| a future Four Colour roadmap | plane maps, duality, Euler's formula, the five-colour theorem |
 
 ### This roadmap consumes
 
@@ -368,8 +368,8 @@ theorem flagComplex_toGMap2 (hK : IsCombinatorialSurface K) :
 
 **Proof strategy and formalization notes.**
 
-- ⚠ Do not define realization through `AbstractSimplicialComplex`. 
-- The subdivision needed for the bridge may be one barycentric step or two, depending on the map. 
+- ⚠ Do not define realization through `AbstractSimplicialComplex`.
+- The subdivision needed for the bridge may be one barycentric step or two, depending on the map.
 
 **Examples and mathematical checks.** The `aa` generalized map from the encoding conventions is a certified counter-witness: it is a valid surface map, its flag triple map is **not** injective, and its unsubdivided flag complex has one triangle where the map has four darts. Realization is checked to produce the correct Euler characteristic on the full layer 1 table, through `PlanarTopology`'s `Surface.eulerChar`, not through `GMap2.eulerChar`.
 
@@ -427,7 +427,7 @@ theorem GMap2.double_eulerChar : G.double.eulerChar = 2 * G.eulerChar
 - An edge contraction preserves the surface only under the appropriate link or non-degeneracy condition. Its realization theorem should state the exact admissibility hypothesis (being a non-loop is not sufficient).
 - Ordinary duality preserves the class of surface maps cleanly in the closed case. With boundary, reversing the involutions moves fixed points from `α₂` to `α₀`, so a relative or capped dual version is needed.
 - **Capping** is the operation that simplifies the classification with boundary: every compact surface with boundary is a closed surface minus `b` open discs. That reduction is layer 8's main structural simplification.
-- Do not build the Petrie dual or higher-dimensional operations. 
+- Do not build the Petrie dual or higher-dimensional operations.
 
 **Examples and mathematical checks.** `dual (dual G) ≃ G` is checked on the closed maps in the layer 1 table (comparison theorem 5). `orientationDoubleCover` of the projective plane is the sphere map, of the Klein bottle map is the torus map, and of an already orientable map is disconnected. `cap` of the disc map is the sphere map. `double` of the Möbius band map is the Klein bottle map. All by `decide` on the explicit maps.
 
@@ -646,7 +646,7 @@ theorem exists_closed_minus_discs (M : Type*) [CompactConnectedSurface M] :
 
 **Natural intermediate results.** (i) `StandardSurface` and its models; (ii) existence in the closed case; (iii) capping with marked cap faces; (iv) relative reduction and uncapping; (v) existence with boundary; (vi) uniqueness; (vii) the complete invariant and its sharpness table.
 
-**Consequences.** `GeometricTopology` layer 9. Layer 5's `Graph.genus`. 
+**Consequences.** `GeometricTopology` layer 9. Layer 5's `Graph.genus`.
 
 ---
 
@@ -740,25 +740,33 @@ theorem exists_vertex_degree_le_five (Γ : Graph α β) (h : Γ.IsPlanar)
     (hs : Γ.IsSimple) (hV : 0 < Γ.vertexCount) : ∃ v, Γ.degree v ≤ 5
 
 /-- Connectivity machinery. -/
-theorem tutte_wheel (Γ : Graph α β) (h : Γ.IsThreeConnected) : ...
+/-- Tutte's Wheel Theorem. -/
+theorem exists_wheel_reduction (Γ : Graph α β) (h : Γ.IsThreeConnected) : ...
 theorem exists_contractible_edge (Γ : Graph α β) (h : Γ.IsThreeConnected)
     (h5 : 5 ≤ Γ.vertexCount) : ∃ e, (Γ.contract e).IsThreeConnected
 
 /-- Kuratowski, via Thomassen's 3-connectivity induction. -/
-theorem kuratowski (Γ : Graph α β) (hs : Γ.IsSimple) :
+theorem isPlanar_iff_no_K5_K33_topologicalMinor (Γ : Graph α β) (hs : Γ.IsSimple) :
     Γ.IsPlanar ↔ ¬ Γ.HasTopologicalMinor (completeGraph 5) ∧
                  ¬ Γ.HasTopologicalMinor (completeBipartiteGraph 3 3)
-theorem wagner (Γ : Graph α β) (hs : Γ.IsSimple) :
+
+/-- Wagner's Theorem. -/
+
+theorem isPlanar_iff_no_K5_K33_minor (Γ : Graph α β) (hs : Γ.IsSimple) :
     Γ.IsPlanar ↔ ¬ Γ.HasMinor (completeGraph 5) ∧
                  ¬ Γ.HasMinor (completeBipartiteGraph 3 3)
 theorem isPlanar_minorClosed : Γ.IsPlanar → Δ.IsMinorOf Γ → Δ.IsPlanar
 
-/-- Peripheral cycles, and Whitney. -/
-theorem tutte_peripheral (Γ : Graph α β) (h : Γ.IsThreeConnected) (e : PlaneEmbedding Γ) :
+/-- Tutte's Peripheral Cycle Theorem. -/
+theorem isPeripheral_iff_isFacial (Γ : Graph α β) (h : Γ.IsThreeConnected) (e : PlaneEmbedding Γ) :
     ∀ C, C.IsPeripheral ↔ e.IsFacial C
-theorem whitney_unique_embedding (Γ : Graph α β) (h : Γ.IsThreeConnected)
+
+/-- Whitney's Unique Embedding Theorem. -/
+theorem planeEmbedding_unique_up_to_equivalence (Γ : Graph α β) (h : Γ.IsThreeConnected)
     (h' : Γ.IsPlanar) : Subsingleton (PlaneEmbedding Γ / EquivalenceOfEmbeddings)
-theorem whitney_two_isomorphism (Γ Δ : Graph α β) : ...
+
+/-- Whitney's 2-Isomorphism Theorem. -/
+theorem cycleMatroid_iso_iff_twoIsomorphic (Γ Δ : Graph α β) : ...
 
 /-- Cycle space, cut space, duality, Mac Lane. -/
 def Graph.cycleSpace (Γ : Graph α β) : Submodule (ZMod 2) (β → ZMod 2)
@@ -767,16 +775,25 @@ theorem cycleSpace_finrank : Module.finrank (ZMod 2) Γ.cycleSpace
     = Γ.edgeCount - Γ.vertexCount + Γ.componentCount
 theorem cycleSpace_orthogonal_cutSpace : ...
 theorem planar_dual_cycleSpace_eq_cutSpace (e : PlaneEmbedding Γ) : ...
-theorem maclane (Γ : Graph α β) (hs : Γ.IsSimple) :
-    Γ.IsPlanar ↔ ∃ B : Basis _ (ZMod 2) Γ.cycleSpace, ∀ e, (B.support e).card ≤ 2
+
+/-- Mac Lane's Planarity Criterion. -/
+def Graph.HasTwoBasis (Γ : Graph α β) : Prop := ...
+
+theorem isPlanar_iff_hasTwoBasis (Γ : Graph α β) (hs : Γ.IsSimple) :
+    Γ.IsPlanar ↔ Γ.HasTwoBasis
 
 /-- Straight-line and convex embeddings. -/
-theorem fary (Γ : Graph α β) (hs : Γ.IsSimple) (h : Γ.IsPlanar) :
+/-- Fáry's Theorem. -/
+theorem exists_straightLine_planeEmbedding (Γ : Graph α β) (hs : Γ.IsSimple) (h : Γ.IsPlanar) :
     ∃ e : PlaneEmbedding Γ, e.IsStraightLine
-theorem tutte_spring (Γ : Graph α β) (h : Γ.IsThreeConnected) (h' : Γ.IsPlanar) :
+
+/-- Tutte's Spring Embedding Theorem. -/
+theorem exists_convex_planeEmbedding (Γ : Graph α β) (h : Γ.IsThreeConnected) (h' : Γ.IsPlanar) :
     ∃ e : PlaneEmbedding Γ, e.IsConvex
 
-theorem five_colour (Γ : Graph α β) (hs : Γ.IsSimple) (h : Γ.IsPlanar) :
+/-- The Five Color Theorem -/
+
+theorem colorable_five_of_isPlanar (Γ : Graph α β) (hs : Γ.IsSimple) (h : Γ.IsPlanar) :
     Γ.Colorable 5
 ```
 
